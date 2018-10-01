@@ -17,6 +17,5 @@ public class Comment extends InscriptionEntity {
 
     @Lob
     private String content;
-    //todo Rating class
-    //private Rating rating;
+    private Rating rating;
 }

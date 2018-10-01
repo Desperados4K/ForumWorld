@@ -6,19 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import javax.persistence.Lob;
-import java.util.Collection;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Entry extends InscriptionEntity {
-
-    private String title;
-    @Lob
-    private String content;
-    private Rating rating;
-    private Collection<Comment> comments;
+public class Rating {
+    private Integer thumbUp;
+    private Integer thumbDown;
 }
