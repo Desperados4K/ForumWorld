@@ -7,9 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Getter
@@ -28,4 +27,34 @@ public class User extends BaseEntity{
     private Role role;
     private String password;
     private boolean authorized;
+    @OneToMany(
+            mappedBy = "author",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+    )
+    private Collection<Topic> topics;
+    @OneToMany(
+            mappedBy = "author",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+    )
+    private Collection<Entry> entries;
+    @OneToMany(
+            mappedBy = "author",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+    )
+    private Collection<Comment> comments;
 }

@@ -5,8 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Lob;
+import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
@@ -21,5 +20,15 @@ public class Entry extends DateEntity {
     private String content;
     private Rating rating;
     private Collection<Comment> comments;
+    @ManyToOne(
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+
+    )
+    @JoinColumn(name = "user_id")
     private User author;
 }

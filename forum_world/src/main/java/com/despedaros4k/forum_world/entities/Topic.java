@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
@@ -22,5 +20,15 @@ public class Topic extends DateEntity {
     @Enumerated(value = EnumType.STRING)
     private Category category;
     private Collection<Entry> entries;
+    @ManyToOne(
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            }
+
+    )
+    @JoinColumn(name = "user_id")
     private User author;
 }
