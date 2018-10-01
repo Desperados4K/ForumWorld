@@ -9,25 +9,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
+public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String userName;
-    private String firstName;
-    private String lastName;
-    //todo add Gender enum
-    //private Gender gender;
-    private String email;
-    //todo add Role enum
-    // private Role role;
-    private String password;
-    private boolean authorized;
+    private String title;
+    //todo add Category class
+    //    private Category category;
+    private LocalDateTime date;
+    private User author;
+    //todo add Entry class
+    //private Set<Entry> entries;
 }
