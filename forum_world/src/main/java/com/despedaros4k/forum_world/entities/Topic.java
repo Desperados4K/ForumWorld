@@ -1,11 +1,14 @@
 package com.despedaros4k.forum_world.entities;
 
+import com.despedaros4k.forum_world.entities.enums.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.Collection;
 
 @Entity
@@ -16,7 +19,7 @@ import java.util.Collection;
 public class Topic extends InscriptionEntity {
 
     private String title;
-    //todo add Category class
-    //    private Category category;
+    @Enumerated(value = EnumType.STRING)
+    private Category category;
     private Collection<Entry> entries;
 }

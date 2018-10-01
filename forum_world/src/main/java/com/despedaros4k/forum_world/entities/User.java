@@ -1,11 +1,15 @@
 package com.despedaros4k.forum_world.entities;
 
+import com.despedaros4k.forum_world.entities.enums.Gender;
+import com.despedaros4k.forum_world.entities.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Entity
 @Getter
@@ -17,11 +21,11 @@ public class User extends BaseEntity{
     private String userName;
     private String firstName;
     private String lastName;
-    //todo add Gender enum
-    //private Gender gender;
+    @Enumerated(value = EnumType.STRING)
+    private Gender gender;
     private String email;
-    //todo add Role enum
-    // private Role role;
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
     private String password;
     private boolean authorized;
 }
