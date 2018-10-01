@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 
 @Entity
@@ -17,7 +15,7 @@ import java.util.Collection;
 @NoArgsConstructor
 public class User {
 
-    public User(String userName, String firstName, String lastName, Gender gender, @NotEmpty(message = "Please provide an e-mail") @Email(message = "Please provide a valid e-mail") String email, Role role, String password, boolean authorized) {
+    public User(String userName, String firstName, String lastName, Gender gender, String email, Role role, String password, boolean authorized) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -47,8 +45,6 @@ public class User {
     private Gender gender;
 
     @Column(name = "email", nullable = false, unique = true)
-    @NotEmpty(message = "Please provide an e-mail")
-    @Email(message = "Please provide a valid e-mail")
     private String email;
 
     @Column(name = "role")
