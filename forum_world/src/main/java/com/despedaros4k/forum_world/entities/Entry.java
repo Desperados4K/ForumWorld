@@ -19,6 +19,10 @@ public class Entry extends DateEntity {
     @Lob
     private String content;
     private Rating rating;
+    @OneToMany(
+            mappedBy = "entry",
+            cascade = CascadeType.ALL
+    )
     private Collection<Comment> comments;
     @ManyToOne(
             cascade = {

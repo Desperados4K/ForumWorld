@@ -28,6 +28,7 @@ public class User extends BaseEntity{
     private String password;
     private boolean authorized;
     @OneToMany(
+            fetch = FetchType.LAZY,
             mappedBy = "author",
             cascade = {
                     CascadeType.DETACH,
@@ -38,6 +39,7 @@ public class User extends BaseEntity{
     )
     private Collection<Topic> topics;
     @OneToMany(
+            fetch = FetchType.LAZY,
             mappedBy = "author",
             cascade = {
                     CascadeType.DETACH,
@@ -48,6 +50,7 @@ public class User extends BaseEntity{
     )
     private Collection<Entry> entries;
     @OneToMany(
+            fetch = FetchType.LAZY,
             mappedBy = "author",
             cascade = {
                     CascadeType.DETACH,
