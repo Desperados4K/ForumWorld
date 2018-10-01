@@ -6,17 +6,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment extends DateEntity {
+public class Comment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Lob
     private String content;
-    private Rating rating;
+
+    //todo relation between rating and comment
+//    private Rating rating;
+    private LocalDateTime date;
+
     @ManyToOne(
             cascade = {
                     CascadeType.DETACH,

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
@@ -14,11 +15,20 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Topic extends DateEntity {
-
+public class Topic {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String title;
     @Enumerated(value = EnumType.STRING)
     private Category category;
+    private LocalDateTime date;
+
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "topic",
+            cascade = CascadeType.ALL
+    )
     private Collection<Entry> entries;
     @ManyToOne(
             cascade = {
