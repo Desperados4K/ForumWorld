@@ -6,17 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import java.util.Collection;
+import javax.persistence.Lob;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Topic extends InscriptionEntity {
+public class Comment extends InscriptionEntity {
 
-    private String title;
-    //todo add Category class
-    //    private Category category;
-    private Collection<Entry> entries;
+    @Lob
+    private String content;
+    //todo Rating class
+    //private Rating rating;
 }

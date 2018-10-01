@@ -5,9 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.xml.stream.events.Comment;
-import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.Lob;
 import java.util.Collection;
 
 @Entity
@@ -15,17 +14,12 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Entry {
+public class Entry extends InscriptionEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String title;
     @Lob
     private String content;
     //todo Rating class
     //private Rating rating;
-    private LocalDateTime date;
     private Collection<Comment> comments;
-    private User author;
 }
