@@ -9,8 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
-@Entity
-@Getter
+@Entity@Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,10 +18,13 @@ public class Entry  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+
     @Lob
     private String content;
-    //todo relation between rating and entry
-//    private Rating rating;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "rating_id")
+    private EntryRating rating;
     private LocalDateTime date;
 
     @OneToMany(

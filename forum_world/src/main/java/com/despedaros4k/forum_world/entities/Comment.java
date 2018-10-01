@@ -21,8 +21,9 @@ public class Comment {
     @Lob
     private String content;
 
-    //todo relation between rating and comment
-//    private Rating rating;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "rating_id")
+    private CommentRating rating;
     private LocalDateTime date;
 
     @ManyToOne(
