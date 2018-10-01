@@ -13,9 +13,10 @@ import javax.persistence.Lob;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment extends InscriptionEntity {
+public class Comment extends DateEntity {
 
     @Lob
     private String content;
     private Rating rating;
+    private User author;
 }

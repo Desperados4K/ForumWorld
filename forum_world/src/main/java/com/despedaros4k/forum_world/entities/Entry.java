@@ -14,11 +14,12 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Entry extends InscriptionEntity {
+public class Entry extends DateEntity {
 
     private String title;
     @Lob
     private String content;
     private Rating rating;
     private Collection<Comment> comments;
+    private User author;
 }

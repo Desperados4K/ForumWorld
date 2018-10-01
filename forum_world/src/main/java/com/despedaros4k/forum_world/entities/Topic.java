@@ -16,10 +16,11 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Topic extends InscriptionEntity {
+public class Topic extends DateEntity {
 
     private String title;
     @Enumerated(value = EnumType.STRING)
     private Category category;
     private Collection<Entry> entries;
+    private User author;
 }

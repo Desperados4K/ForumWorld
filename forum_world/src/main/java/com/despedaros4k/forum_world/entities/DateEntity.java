@@ -7,8 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public abstract class InscriptionEntity extends BaseEntity {
+public abstract class DateEntity extends BaseEntity {
 
     private LocalDateTime date;
-    private User author;
 }
