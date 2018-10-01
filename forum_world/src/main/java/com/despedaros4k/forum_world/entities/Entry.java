@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.xml.stream.events.Comment;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -17,14 +15,17 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Topic {
+public class Entry {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    //todo add Category class
-    //    private Category category;
+    @Lob
+    private String content;
+    //todo Rating class
+    //private Rating rating;
     private LocalDateTime date;
+    private Collection<Comment> comments;
     private User author;
-    private Collection<Entry> entries;
 }
