@@ -2,9 +2,7 @@ package com.despedaros4k.forum_world.entities;
 
 import com.despedaros4k.forum_world.entities.enums.Gender;
 import com.despedaros4k.forum_world.entities.enums.Role;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -13,6 +11,8 @@ import java.util.Collection;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
 
     public User(String userName, String firstName, String lastName, Gender gender, String email, Role role, String password, boolean authorized) {

@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Configuration
 @Slf4j
@@ -51,20 +52,29 @@ public class DataLoader {
     }
 
     private Iterable<User> initUsers() {
-        User adminUser = userRepository.save(new User("Romanello", "Roman", "Bułka", Gender.MALE, "roman@info.com", Role.ADMIN, "password", true));
-        User moderatorUser  = userRepository.save(new User("Mała", "Irenka", "Buc-Pinda", Gender.FEMALE, "irenka@info.com", Role.MODERATOR, "password2", false));
-        User regularUser = userRepository.save(new User("Viola", "Wioletta", "Szczepanik", Gender.FEMALE, "wiole@info.com", Role.REGULAR, "password3", true));
-        return userRepository.findAll();
+        User adminUser = userRepository.save(
+                User.builder()
+                .userName("Romanello").firstName("Roman").lastName("Bułka").gender(Gender.MALE).email("roman@info.com").role(Role.ADMIN).password("password").authorized(true)
+                .build());
+        User moderatorUser = userRepository.save(
+                User.builder()
+                .userName("Mała").firstName("Irenka").lastName("Buc-Pinda").gender(Gender.FEMALE).email("irenka@info.com").role(Role.MODERATOR).password("password2").authorized(false)
+                .build());
+        User regularUser = userRepository.save(
+                User.builder()
+                .userName("Viola").firstName("Wioletta").lastName("Szczepanik").gender(Gender.FEMALE).email("viola@info.com").role(Role.REGULAR).password("password3").authorized(true)
+                .build());
+
+        return Arrays.asList(adminUser, moderatorUser, regularUser);
     }
 
     private Iterable<Topic> initTopics() {
         User romanUser = userRepository.findByUserName("Romanello").get();
         User violaUser = userRepository.findByUserName("Viola").get();
+
         Topic firstTopic = topicRepository.save(new Topic("My pet is ill", Category.ANIMALS, LocalDateTime.now(), romanUser));
         Topic secondTopic = topicRepository.save(new Topic("I love my pet even it's ill", Category.ANIMALS, LocalDateTime.now(), violaUser));
-
-
-        return topicRepository.findAll();
+        return Arrays.asList(firstTopic, secondTopic);
     }
 
     private Iterable<Entry> initEntries() {
