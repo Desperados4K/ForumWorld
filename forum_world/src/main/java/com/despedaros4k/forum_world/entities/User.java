@@ -61,36 +61,21 @@ public class User {
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "author",
-            cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
-            }
+            cascade = CascadeType.ALL
     )
     private Collection<Topic> topics;
 
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "author",
-            cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
-            }
+            cascade = CascadeType.ALL
     )
     private Collection<Entry> entries;
 
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "author",
-            cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
-            }
+            cascade = CascadeType.ALL
     )
     private Collection<Comment> comments;
 }
