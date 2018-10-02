@@ -72,8 +72,15 @@ public class DataLoader {
         User romanUser = userRepository.findByUserName("Romanello").get();
         User violaUser = userRepository.findByUserName("Viola").get();
 
-        Topic firstTopic = topicRepository.save(new Topic("My pet is ill", Category.ANIMALS, LocalDateTime.now(), romanUser));
-        Topic secondTopic = topicRepository.save(new Topic("I love my pet even it's ill", Category.ANIMALS, LocalDateTime.now(), violaUser));
+        Topic firstTopic = topicRepository.save(
+                Topic.builder()
+                        .title("My pet is ill").category(Category.ANIMALS).date(LocalDateTime.now()).author(romanUser)
+                        .build());
+
+        Topic secondTopic = topicRepository.save(
+                Topic.builder()
+                        .title("I love my pet even it's ill").category(Category.ANIMALS).date(LocalDateTime.now()).author(violaUser)
+                        .build());
         return Arrays.asList(firstTopic, secondTopic);
     }
 
