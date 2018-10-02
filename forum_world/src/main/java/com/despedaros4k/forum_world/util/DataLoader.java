@@ -55,7 +55,7 @@ public class DataLoader {
         });
 
         comments.forEach(comment -> {
-            log.info("Preloaded entry: " + comment.getId());
+            log.info("Preloaded comment: " + comment.getContent());
         });
         return args -> {};
     }
@@ -148,24 +148,10 @@ public class DataLoader {
         Entry secondEntry = entryRepository.findById(2L).get();
 
         Comment firstComment = commentRepository.save(Comment.builder().author(romanUser).entry(secondEntry).date(LocalDateTime.now())
-                .content("Lorem ipsum dolor sit amet, consectetur adipisicing elit, " +
-                        "sed do eiusmod tempor incididunt ut labore et dolore magna " +
-                        "aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
-                        "ullamco laboris nisi ut aliquip ex ea commodo consequat. Du" +
-                        "is aute irure dolor in reprehenderit in voluptate velit ess" +
-                        "e cillum dolore eu fugiat nulla pariatur. Excepteur sint oc" +
-                        "caecat cupidatat non proident, sunt in culpa qui officia de" +
-                        "serunt mollit anim id est laborum.")
+                .content("Bad comment")
                 .build());
         Comment secondComment = commentRepository.save(Comment.builder().author(violaUser).entry(firstEntry).date(LocalDateTime.now())
-                .content("Lorem ipsum dolor sit amet, consectetur adipisicing elit, " +
-                        "sed do eiusmod tempor incididunt ut labore et dolore magna " +
-                        "aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
-                        "ullamco laboris nisi ut aliquip ex ea commodo consequat. Du" +
-                        "is aute irure dolor in reprehenderit in voluptate velit ess" +
-                        "e cillum dolore eu fugiat nulla pariatur. Excepteur sint oc" +
-                        "caecat cupidatat non proident, sunt in culpa qui officia de" +
-                        "serunt mollit anim id est laborum.")
+                .content("Good comment")
                 .build());
         return Arrays.asList(firstComment, secondComment);
     }
