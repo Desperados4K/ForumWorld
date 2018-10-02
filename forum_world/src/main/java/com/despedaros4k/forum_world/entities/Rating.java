@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ratings")
 @Inheritance (
-        strategy = InheritanceType.TABLE_PER_CLASS
+        strategy = InheritanceType.JOINED
 )
 @Getter
 @Setter

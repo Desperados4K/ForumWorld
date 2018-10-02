@@ -53,8 +53,11 @@ public class DataLoader {
         entries.forEach(entry -> {
             log.info("Preloaded entry: " + entry.getTitle());
         });
-        return args -> {
-        };
+
+        comments.forEach(comment -> {
+            log.info("Preloaded entry: " + comment.getId());
+        });
+        return args -> {};
     }
 
     private Iterable<User> initUsers() {
@@ -108,7 +111,7 @@ public class DataLoader {
                                 "e cillum dolore eu fugiat nulla pariatur. Excepteur sint oc" +
                                 "caecat cupidatat non proident, sunt in culpa qui officia de" +
                                 "serunt mollit anim id est laborum.")
-//                        .rating(new EntryRating(0, 0))
+//  todo                      .rating(new EntryRating(0, 0))
                         .build());
         Entry secondEntry = entryRepository.save(
                 Entry.builder().title("Do You recognize race of my dog").author(violaUser).date(LocalDateTime.now()).topic(secondTopic)
@@ -120,7 +123,7 @@ public class DataLoader {
                                 "e cillum dolore eu fugiat nulla pariatur. Excepteur sint oc" +
                                 "caecat cupidatat non proident, sunt in culpa qui officia de" +
                                 "serunt mollit anim id est laborum.")
-//                        .rating(new EntryRating(0, 0))
+//    todo                    .rating(new EntryRating(0, 0))
                         .build());
         Entry thirdEntry = entryRepository.save(
                 Entry.builder().title("Nobody helps your pet").author(malaUser).date(LocalDateTime.now()).topic(firstTopic)
@@ -132,12 +135,38 @@ public class DataLoader {
                                 "e cillum dolore eu fugiat nulla pariatur. Excepteur sint oc" +
                                 "caecat cupidatat non proident, sunt in culpa qui officia de" +
                                 "serunt mollit anim id est laborum.")
-//                        .rating(new EntryRating(0, 0))
+//         todo               .rating(new EntryRating(0, 0))
                         .build());
         return Arrays.asList(firstEntry, secondEntry, thirdEntry);
     }
 
     private Iterable<Comment> initComments() {
-        return null;
+        User romanUser = userRepository.findByUserName("Romanello").get();
+        User violaUser = userRepository.findByUserName("Viola").get();
+
+        Entry firstEntry = entryRepository.findById(1L).get();
+        Entry secondEntry = entryRepository.findById(2L).get();
+
+        Comment firstComment = commentRepository.save(Comment.builder().author(romanUser).entry(secondEntry).date(LocalDateTime.now())
+                .content("Lorem ipsum dolor sit amet, consectetur adipisicing elit, " +
+                        "sed do eiusmod tempor incididunt ut labore et dolore magna " +
+                        "aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
+                        "ullamco laboris nisi ut aliquip ex ea commodo consequat. Du" +
+                        "is aute irure dolor in reprehenderit in voluptate velit ess" +
+                        "e cillum dolore eu fugiat nulla pariatur. Excepteur sint oc" +
+                        "caecat cupidatat non proident, sunt in culpa qui officia de" +
+                        "serunt mollit anim id est laborum.")
+                .build());
+        Comment secondComment = commentRepository.save(Comment.builder().author(violaUser).entry(firstEntry).date(LocalDateTime.now())
+                .content("Lorem ipsum dolor sit amet, consectetur adipisicing elit, " +
+                        "sed do eiusmod tempor incididunt ut labore et dolore magna " +
+                        "aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
+                        "ullamco laboris nisi ut aliquip ex ea commodo consequat. Du" +
+                        "is aute irure dolor in reprehenderit in voluptate velit ess" +
+                        "e cillum dolore eu fugiat nulla pariatur. Excepteur sint oc" +
+                        "caecat cupidatat non proident, sunt in culpa qui officia de" +
+                        "serunt mollit anim id est laborum.")
+                .build());
+        return Arrays.asList(firstComment, secondComment);
     }
 }
