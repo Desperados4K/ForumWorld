@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 
 @Configuration
 @Slf4j
@@ -42,10 +41,10 @@ public class DataLoader {
         Iterable<Entry> entries = initEntries();
         Iterable<Comment> comments = initComments();
         users.forEach(user -> {
-            log.info("Preloaded " + user);
+            log.info("Preloaded user: " + user.getUserName());
         });
         topics.forEach(topic -> {
-            log.info("Preloaded " + topic);
+            log.info("Preloaded topic: " + topic.getTitle());
         });
         return args -> {
         };
@@ -59,14 +58,13 @@ public class DataLoader {
     }
 
     private Iterable<Topic> initTopics() {
-        User romanUser = userRepository.findById(1L).get();
-        User violaUser = userRepository.findById(3L).get();
+        User romanUser = userRepository.findByUserName("Romanello").get();
+        User violaUser = userRepository.findByUserName("Viola").get();
         Topic firstTopic = topicRepository.save(new Topic("My pet is ill", Category.ANIMALS, LocalDateTime.now(), romanUser));
         Topic secondTopic = topicRepository.save(new Topic("I love my pet even it's ill", Category.ANIMALS, LocalDateTime.now(), violaUser));
-        System.out.println(firstTopic.getTitle());
-        System.out.println(secondTopic.getTitle());
 
-        return new HashSet<>();
+
+        return topicRepository.findAll();
     }
 
     private Iterable<Entry> initEntries() {
