@@ -34,11 +34,17 @@ public class Topic {
             cascade = {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
-                    CascadeType.PERSIST,
                     CascadeType.REFRESH
             }
 
     )
     @JoinColumn(name = "user_id")
     private User author;
+
+    public Topic(String title, Category category, LocalDateTime date, User author) {
+        this.title = title;
+        this.category = category;
+        this.date = date;
+        this.author = author;
+    }
 }
