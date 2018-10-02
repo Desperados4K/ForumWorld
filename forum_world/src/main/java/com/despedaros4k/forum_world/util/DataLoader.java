@@ -25,27 +25,33 @@ public class DataLoader {
     private TopicRepository topicRepository;
     private EntryRepository entryRepository;
     private CommentRepository commentRepository;
-    private RatingRepository ratingRepository;
 
     public DataLoader(UserRepository userRepository, TopicRepository topicRepository, EntryRepository entryRepository, CommentRepository commentRepository, RatingRepository ratingRepository) {
         this.userRepository = userRepository;
         this.topicRepository = topicRepository;
         this.entryRepository = entryRepository;
         this.commentRepository = commentRepository;
-        this.ratingRepository = ratingRepository;
     }
 
     @Bean
     public CommandLineRunner initDatabase() {
+        //prepare entities and save them into database
         Iterable<User> users = initUsers();
         Iterable<Topic> topics = initTopics();
         Iterable<Entry> entries = initEntries();
         Iterable<Comment> comments = initComments();
+
+        //display log info about saved entities
         users.forEach(user -> {
             log.info("Preloaded user: " + user.getUserName());
         });
+
         topics.forEach(topic -> {
             log.info("Preloaded topic: " + topic.getTitle());
+        });
+
+        entries.forEach(entry -> {
+            log.info("Preloaded entry: " + entry.getTitle());
         });
         return args -> {
         };
@@ -85,7 +91,50 @@ public class DataLoader {
     }
 
     private Iterable<Entry> initEntries() {
-        return null;
+        User romanUser = userRepository.findByUserName("Romanello").get();
+        User malaUser = userRepository.findByUserName("Mała").get();
+        User violaUser = userRepository.findByUserName("Viola").get();
+
+        Topic firstTopic = topicRepository.findById(1L).get();
+        Topic secondTopic = topicRepository.findById(2L).get();
+
+        Entry firstEntry = entryRepository.save(
+                Entry.builder().title("Help me cure my pet").author(romanUser).date(LocalDateTime.now()).topic(firstTopic)
+                        .content("Lorem ipsum dolor sit amet, consectetur adipisicing elit, " +
+                                "sed do eiusmod tempor incididunt ut labore et dolore magna " +
+                                "aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
+                                "ullamco laboris nisi ut aliquip ex ea commodo consequat. Du" +
+                                "is aute irure dolor in reprehenderit in voluptate velit ess" +
+                                "e cillum dolore eu fugiat nulla pariatur. Excepteur sint oc" +
+                                "caecat cupidatat non proident, sunt in culpa qui officia de" +
+                                "serunt mollit anim id est laborum.")
+//                        .rating(new EntryRating(0, 0))
+                        .build());
+        Entry secondEntry = entryRepository.save(
+                Entry.builder().title("Do You recognize race of my dog").author(violaUser).date(LocalDateTime.now()).topic(secondTopic)
+                        .content("Lorem ipsum dolor sit amet, consectetur adipisicing elit, " +
+                                "sed do eiusmod tempor incididunt ut labore et dolore magna " +
+                                "aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
+                                "ullamco laboris nisi ut aliquip ex ea commodo consequat. Du" +
+                                "is aute irure dolor in reprehenderit in voluptate velit ess" +
+                                "e cillum dolore eu fugiat nulla pariatur. Excepteur sint oc" +
+                                "caecat cupidatat non proident, sunt in culpa qui officia de" +
+                                "serunt mollit anim id est laborum.")
+//                        .rating(new EntryRating(0, 0))
+                        .build());
+        Entry thirdEntry = entryRepository.save(
+                Entry.builder().title("Nobody helps your pet").author(malaUser).date(LocalDateTime.now()).topic(firstTopic)
+                        .content("Lorem ipsum dolor sit amet, consectetur adipisicing elit, " +
+                                "sed do eiusmod tempor incididunt ut labore et dolore magna " +
+                                "aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
+                                "ullamco laboris nisi ut aliquip ex ea commodo consequat. Du" +
+                                "is aute irure dolor in reprehenderit in voluptate velit ess" +
+                                "e cillum dolore eu fugiat nulla pariatur. Excepteur sint oc" +
+                                "caecat cupidatat non proident, sunt in culpa qui officia de" +
+                                "serunt mollit anim id est laborum.")
+//                        .rating(new EntryRating(0, 0))
+                        .build());
+        return Arrays.asList(firstEntry, secondEntry, thirdEntry);
     }
 
     private Iterable<Comment> initComments() {

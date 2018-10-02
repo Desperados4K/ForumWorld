@@ -1,25 +1,27 @@
 package com.despedaros4k.forum_world.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-//todo relation of rating
 @Entity
 @Table(name = "ratings")
 @Inheritance (
-        strategy = InheritanceType.JOINED
+        strategy = InheritanceType.TABLE_PER_CLASS
 )
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Rating {
+    public Rating(Integer thumbUp, Integer thumbDown) {
+        this.thumbUp = thumbUp;
+        this.thumbDown = thumbDown;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private Integer thumbUp;
     private Integer thumbDown;

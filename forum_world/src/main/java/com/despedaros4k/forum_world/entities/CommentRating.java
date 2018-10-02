@@ -5,8 +5,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "comment_ratings")
 public class CommentRating extends Rating {
-    public CommentRating(Long id, Integer thumbUp, Integer thumbDown) {
-        super(id, thumbUp, thumbDown);
+    public CommentRating(Integer thumbUp, Integer thumbDown) {
+        super(thumbUp, thumbDown);
     }
     @JoinColumn(name = "comment_id",
             nullable = false

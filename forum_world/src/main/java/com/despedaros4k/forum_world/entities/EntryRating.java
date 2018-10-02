@@ -5,8 +5,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "entry_ratings")
 public class EntryRating extends Rating{
-    public EntryRating(Long id, Integer thumbUp, Integer thumbDown) {
-        super(id, thumbUp, thumbDown);
+    public EntryRating(Integer thumbUp, Integer thumbDown) {
+        super(thumbUp, thumbDown);
     }
     @JoinColumn(name = "entry_id",
             nullable = false
@@ -19,4 +19,12 @@ public class EntryRating extends Rating{
                     CascadeType.REFRESH
             })
     private Entry entry;
+
+    public Entry getEntry() {
+        return entry;
+    }
+
+    public void setEntry(Entry entry) {
+        this.entry = entry;
+    }
 }
