@@ -7,7 +7,10 @@ import com.despedaros4k.forum_world.entities.User;
 import com.despedaros4k.forum_world.entities.enums.Category;
 import com.despedaros4k.forum_world.entities.enums.Gender;
 import com.despedaros4k.forum_world.entities.enums.Role;
-import com.despedaros4k.forum_world.repositories.*;
+import com.despedaros4k.forum_world.repositories.CommentRepository;
+import com.despedaros4k.forum_world.repositories.EntryRepository;
+import com.despedaros4k.forum_world.repositories.TopicRepository;
+import com.despedaros4k.forum_world.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +29,7 @@ public class DataLoader {
     private EntryRepository entryRepository;
     private CommentRepository commentRepository;
 
-    public DataLoader(UserRepository userRepository, TopicRepository topicRepository, EntryRepository entryRepository, CommentRepository commentRepository, RatingRepository ratingRepository) {
+    public DataLoader(UserRepository userRepository, TopicRepository topicRepository, EntryRepository entryRepository, CommentRepository commentRepository) {
         this.userRepository = userRepository;
         this.topicRepository = topicRepository;
         this.entryRepository = entryRepository;
@@ -111,7 +114,6 @@ public class DataLoader {
                                 "e cillum dolore eu fugiat nulla pariatur. Excepteur sint oc" +
                                 "caecat cupidatat non proident, sunt in culpa qui officia de" +
                                 "serunt mollit anim id est laborum.")
-//  todo                      .rating(new EntryRating(0, 0))
                         .build());
         Entry secondEntry = entryRepository.save(
                 Entry.builder().title("Do You recognize race of my dog").author(violaUser).date(LocalDateTime.now()).topic(secondTopic)
@@ -123,7 +125,6 @@ public class DataLoader {
                                 "e cillum dolore eu fugiat nulla pariatur. Excepteur sint oc" +
                                 "caecat cupidatat non proident, sunt in culpa qui officia de" +
                                 "serunt mollit anim id est laborum.")
-//    todo                    .rating(new EntryRating(0, 0))
                         .build());
         Entry thirdEntry = entryRepository.save(
                 Entry.builder().title("Nobody helps your pet").author(malaUser).date(LocalDateTime.now()).topic(firstTopic)
@@ -135,7 +136,6 @@ public class DataLoader {
                                 "e cillum dolore eu fugiat nulla pariatur. Excepteur sint oc" +
                                 "caecat cupidatat non proident, sunt in culpa qui officia de" +
                                 "serunt mollit anim id est laborum.")
-//         todo               .rating(new EntryRating(0, 0))
                         .build());
         return Arrays.asList(firstEntry, secondEntry, thirdEntry);
     }

@@ -20,9 +20,6 @@ public class Entry  {
     @Lob
     private String content;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "rating_id")
-    private EntryRating rating;
     private LocalDateTime date;
 
     @OneToMany(

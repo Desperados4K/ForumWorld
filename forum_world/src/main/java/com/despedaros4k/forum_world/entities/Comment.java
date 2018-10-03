@@ -19,9 +19,6 @@ public class Comment {
     @Lob
     private String content;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "rating_id")
-    private CommentRating rating;
     private LocalDateTime date;
 
     @ManyToOne(
