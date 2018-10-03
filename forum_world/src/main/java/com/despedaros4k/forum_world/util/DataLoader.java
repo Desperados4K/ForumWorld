@@ -25,12 +25,16 @@ public class DataLoader {
     private TopicRepository topicRepository;
     private EntryRepository entryRepository;
     private CommentRepository commentRepository;
+    private EntryRatingRepository entryRatingRepository;
+    private CommentRatingRepository commentRatingRepository;
 
-    public DataLoader(UserRepository userRepository, TopicRepository topicRepository, EntryRepository entryRepository, CommentRepository commentRepository, RatingRepository ratingRepository) {
+    public DataLoader(UserRepository userRepository, TopicRepository topicRepository, EntryRepository entryRepository, CommentRepository commentRepository, RatingRepository ratingRepository, EntryRatingRepository entryRatingRepository, CommentRatingRepository commentRatingRepository) {
         this.userRepository = userRepository;
         this.topicRepository = topicRepository;
         this.entryRepository = entryRepository;
         this.commentRepository = commentRepository;
+        this.entryRatingRepository = entryRatingRepository;
+        this.commentRatingRepository = commentRatingRepository;
     }
 
     @Bean
