@@ -48,4 +48,10 @@ public class Entry  {
     )
     @JoinColumn(name = "topic_id")
     private Topic topic;
+
+    public Entry(String title, String content, LocalDateTime date) {
+        this.title = title;
+        this.content = content;
+        this.date = date;
+    }
 }
