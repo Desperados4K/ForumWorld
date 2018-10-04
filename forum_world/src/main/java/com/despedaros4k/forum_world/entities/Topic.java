@@ -31,13 +31,6 @@ public class Topic {
     )
     @JsonBackReference
     private Collection<Entry> entries;
-    public Topic(String title, Category category, LocalDateTime date, User author) {
-        this.title = title;
-        this.category = category;
-        this.date = date;
-        this.author = author;
-    }
-
     @ManyToOne(
             fetch = FetchType.EAGER,
             cascade = {
@@ -50,4 +43,11 @@ public class Topic {
     @JoinColumn(name = "user_id")
     @JsonManagedReference
     private User author;
+
+    public Topic(String title, Category category, LocalDateTime date, User author) {
+        this.title = title;
+        this.category = category;
+        this.date = date;
+        this.author = author;
+    }
 }
