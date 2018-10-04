@@ -3,7 +3,9 @@ package com.despedaros4k.forum_world.services;
 import com.despedaros4k.forum_world.entities.Topic;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TopicRestService implements RestService<Topic> {
     @Override
     public Resources<Resource<Topic>> findAll() {
