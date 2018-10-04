@@ -1,15 +1,39 @@
 package com.despedaros4k.forum_world.services;
 
+import com.despedaros4k.forum_world.controllers.TopicController;
 import com.despedaros4k.forum_world.entities.Topic;
+import com.despedaros4k.forum_world.repositories.TopicRepository;
+import com.despedaros4k.forum_world.resourceAssemblers.TopicResourceAssembler;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 @Service
 public class TopicRestService implements RestService<Topic> {
+
+    private final TopicRepository topicRepository;
+    private final TopicResourceAssembler topicResourceAssembler;
+
+    public TopicRestService(TopicRepository topicRepository, TopicResourceAssembler topicResourceAssembler) {
+        this.topicRepository = topicRepository;
+        this.topicResourceAssembler = topicResourceAssembler;
+    }
+
     @Override
     public Resources<Resource<Topic>> findAll() {
-        return null;
+        List<Resource<Topic>> topics = topicRepository
+                .findAll()
+                .stream()
+                .map(topicResourceAssembler::toResource)
+                .collect(Collectors.toList());
+        return new Resources<>(topics,
+                linkTo(methodOn(TopicController.class).allTopics()).withRel(TopicController.BASE_URL));
     }
 
     @Override
