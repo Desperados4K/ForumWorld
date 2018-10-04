@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(UserController.BASE_URL)
 public class UserController {
+
+    public final static String BASE_URL = "/api/v1/users";
+
     private final UserRestService userRestService;
 
     public UserController(UserRestService userRestService) {
