@@ -17,8 +17,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Service
 public class UserRestService implements RestService<User> {
-    private UserRepository userRepository;
-    private UserResourceAssembler userResourceAssembler;
+    private final UserRepository userRepository;
+    private final UserResourceAssembler userResourceAssembler;
 
     public UserRestService(UserRepository userRepository, UserResourceAssembler userResourceAssembler) {
         this.userRepository = userRepository;
