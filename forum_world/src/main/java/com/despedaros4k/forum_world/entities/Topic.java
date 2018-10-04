@@ -45,4 +45,11 @@ public class Topic {
         this.date = date;
         this.author = author;
     }
+
+    public Topic(String title, Category category, LocalDateTime date, Collection<Entry> entries) {
+        this.title = title;
+        this.category = category;
+        this.date = date;
+        this.entries = entries;
+    }
 }

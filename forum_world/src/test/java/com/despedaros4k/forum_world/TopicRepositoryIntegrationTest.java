@@ -1,8 +1,11 @@
 package com.despedaros4k.forum_world;
 
-import com.despedaros4k.forum_world.entities.enums.Gender;
+import com.despedaros4k.forum_world.entities.Topic;
 import com.despedaros4k.forum_world.entities.User;
+import com.despedaros4k.forum_world.entities.enums.Category;
+import com.despedaros4k.forum_world.entities.enums.Gender;
 import com.despedaros4k.forum_world.entities.enums.Role;
+import com.despedaros4k.forum_world.repositories.TopicRepository;
 import com.despedaros4k.forum_world.repositories.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,33 +14,34 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class UserRepositoryIntegrationTest {
+public class TopicRepositoryIntegrationTest {
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Autowired
-    private UserRepository userRepository;
+    private TopicRepository topicRepository;
 
     @Test
-    public void whenFindByNameUser_thenReturnUser() {
+    public void whenFindByTopicTitle_thenReturnTopic() {
         // given
-        User user = User.builder().userName("userName").firstName("userFirstname").lastName("userLastname").gender(Gender.FEMALE).email("user@gmail.com").role(Role.MODERATOR).password("password").authorized(false).build();
-        entityManager.persist(user);
+
+        Topic topic = Topic.builder().title("title").category(Category.SPORT).date(LocalDateTime.now()).build();
+        entityManager.persist(topic);
         entityManager.flush();
 
         // when
-        Optional<User> found = userRepository.findByUserName(user.getUserName());
+        Optional<Topic> found = topicRepository.findByTitle(topic.getTitle());
 
         // then
-        assertThat(found.get().getUserName())
-                .isEqualTo(user.getUserName());
+        assertThat(found.get().getTitle())
+                .isEqualTo(topic.getTitle());
     }
-
 }
