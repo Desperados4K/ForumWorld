@@ -4,6 +4,7 @@ import com.despedaros4k.forum_world.controllers.UserController;
 import com.despedaros4k.forum_world.entities.User;
 import com.despedaros4k.forum_world.repositories.UserRepository;
 import com.despedaros4k.forum_world.resourceAssemblers.UserResourceAssembler;
+import com.despedaros4k.forum_world.util.exceptions.UserNotFoundException;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
@@ -32,12 +33,14 @@ public class UserRestService implements RestService<User> {
                 .map(userResourceAssembler::toResource)
                 .collect(Collectors.toList());
         return new Resources<>(users,
-                linkTo(methodOn(UserController.class).all()).withRel("users"));
+                linkTo(methodOn(UserController.class).allUsers()).withRel("users"));
     }
 
     @Override
     public Resource<User> findById(Long id) {
-        return null;
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+        return userResourceAssembler.toResource(user);
     }
 
     @Override
