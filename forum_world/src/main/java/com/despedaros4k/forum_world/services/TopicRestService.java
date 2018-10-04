@@ -34,7 +34,7 @@ public class TopicRestService implements RestService<Topic> {
                 .map(topicResourceAssembler::toResource)
                 .collect(Collectors.toList());
         return new Resources<>(topics,
-                linkTo(methodOn(TopicController.class).allTopics()).withRel(TopicController.BASE_URL));
+                linkTo(methodOn(TopicController.class).allTopics()).withRel("topics"));
     }
 
     @Override
