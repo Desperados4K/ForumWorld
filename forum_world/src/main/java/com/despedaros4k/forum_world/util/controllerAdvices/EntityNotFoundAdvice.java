@@ -1,5 +1,6 @@
 package com.despedaros4k.forum_world.util.controllerAdvices;
 
+import com.despedaros4k.forum_world.util.exceptions.CommentNotFoundException;
 import com.despedaros4k.forum_world.util.exceptions.TopicNotFoundException;
 import com.despedaros4k.forum_world.util.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,13 @@ public class EntityNotFoundAdvice {
     @ExceptionHandler(TopicNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     String topicNotFoundHandler(UserNotFoundException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(CommentNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String commentNotFoundHandler(UserNotFoundException ex) {
         return ex.getMessage();
     }
 }
