@@ -1,12 +1,8 @@
 package com.despedaros4k.forum_world;
 
 import com.despedaros4k.forum_world.entities.Topic;
-import com.despedaros4k.forum_world.entities.User;
 import com.despedaros4k.forum_world.entities.enums.Category;
-import com.despedaros4k.forum_world.entities.enums.Gender;
-import com.despedaros4k.forum_world.entities.enums.Role;
 import com.despedaros4k.forum_world.repositories.TopicRepository;
-import com.despedaros4k.forum_world.repositories.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
