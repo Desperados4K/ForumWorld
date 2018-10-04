@@ -1,6 +1,8 @@
 package com.despedaros4k.forum_world.entities;
 
 import com.despedaros4k.forum_world.entities.enums.Category;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,8 +29,17 @@ public class Topic {
             mappedBy = "topic",
             cascade = CascadeType.ALL
     )
+    @JsonBackReference
     private Collection<Entry> entries;
+    public Topic(String title, Category category, LocalDateTime date, User author) {
+        this.title = title;
+        this.category = category;
+        this.date = date;
+        this.author = author;
+    }
+
     @ManyToOne(
+            fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
@@ -37,12 +48,6 @@ public class Topic {
 
     )
     @JoinColumn(name = "user_id")
+    @JsonManagedReference
     private User author;
-
-    public Topic(String title, Category category, LocalDateTime date, User author) {
-        this.title = title;
-        this.category = category;
-        this.date = date;
-        this.author = author;
-    }
 }

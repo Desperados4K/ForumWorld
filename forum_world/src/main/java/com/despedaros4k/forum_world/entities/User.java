@@ -2,6 +2,7 @@ package com.despedaros4k.forum_world.entities;
 
 import com.despedaros4k.forum_world.entities.enums.Gender;
 import com.despedaros4k.forum_world.entities.enums.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -63,6 +64,7 @@ public class User {
             mappedBy = "author",
             cascade = CascadeType.ALL
     )
+    @JsonBackReference
     private Collection<Topic> topics;
 
     @OneToMany(
@@ -70,6 +72,7 @@ public class User {
             mappedBy = "author",
             cascade = CascadeType.ALL
     )
+    @JsonBackReference
     private Collection<Entry> entries;
 
     @OneToMany(
@@ -77,5 +80,6 @@ public class User {
             mappedBy = "author",
             cascade = CascadeType.ALL
     )
+    @JsonBackReference
     private Collection<Comment> comments;
 }

@@ -1,5 +1,7 @@
 package com.despedaros4k.forum_world.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,12 +25,15 @@ public class Entry  {
     private LocalDateTime date;
 
     @OneToMany(
+            fetch = FetchType.LAZY,
             mappedBy = "entry",
             cascade = CascadeType.ALL
     )
+    @JsonBackReference
     private Collection<Comment> comments;
 
     @ManyToOne(
+            fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
@@ -37,8 +42,10 @@ public class Entry  {
 
     )
     @JoinColumn(name = "user_id")
+    @JsonManagedReference
     private User author;
     @ManyToOne(
+            fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
@@ -47,5 +54,6 @@ public class Entry  {
 
     )
     @JoinColumn(name = "topic_id")
+    @JsonManagedReference
     private Topic topic;
 }
