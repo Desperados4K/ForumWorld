@@ -4,6 +4,7 @@ import com.despedaros4k.forum_world.controllers.TopicController;
 import com.despedaros4k.forum_world.entities.Topic;
 import com.despedaros4k.forum_world.repositories.TopicRepository;
 import com.despedaros4k.forum_world.resourceAssemblers.TopicResourceAssembler;
+import com.despedaros4k.forum_world.util.exceptions.TopicNotFoundException;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,8 @@ public class TopicRestService implements RestService<Topic> {
 
     @Override
     public Resource<Topic> findById(Long id) {
-        return null;
+        Topic topic = topicRepository.findById(id).orElseThrow(() -> new TopicNotFoundException(id));
+        return topicResourceAssembler.toResource(topic);
     }
 
     @Override

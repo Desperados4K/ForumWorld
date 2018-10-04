@@ -6,6 +6,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +27,8 @@ public class TopicController {
         return ResponseEntity.ok(topicRestService.findAll());
     }
 
-    public ResponseEntity<Resource<Topic>> oneTopic(Long id) {
-        return null;
+    @GetMapping(path = "/{id}", produces = "application/hal+json")
+    public ResponseEntity<Resource<Topic>> oneTopic(@PathVariable Long id) {
+        return ResponseEntity.ok(topicRestService.findById(id));
     }
 }

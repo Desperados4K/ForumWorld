@@ -27,7 +27,7 @@ public class UserController {
         return ResponseEntity.ok(userRestService.findAll());
     }
 
-    @GetMapping(path ="{id}", produces = "application/hal+json")
+    @GetMapping(path = "{id}", produces = "application/hal+json")
     public ResponseEntity<Resource<User>> oneUser(@PathVariable Long id) {
         return ResponseEntity.ok(userRestService.findById(id));
     }
