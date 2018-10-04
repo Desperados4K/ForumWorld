@@ -17,11 +17,11 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Service
 public class UserRestService implements RestService<User> {
     private UserRepository userRepository;
-    private UserResourceAssembler assembler;
+    private UserResourceAssembler userResourceAssembler;
 
-    public UserRestService(UserRepository userRepository, UserResourceAssembler assembler) {
+    public UserRestService(UserRepository userRepository, UserResourceAssembler userResourceAssembler) {
         this.userRepository = userRepository;
-        this.assembler = assembler;
+        this.userResourceAssembler = userResourceAssembler;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class UserRestService implements RestService<User> {
         List<Resource<User>> users = userRepository
                 .findAll()
                 .stream()
-                .map(assembler::toResource)
+                .map(userResourceAssembler::toResource)
                 .collect(Collectors.toList());
         return new Resources<>(users,
                 linkTo(methodOn(UserController.class).all()).withRel("users"));
