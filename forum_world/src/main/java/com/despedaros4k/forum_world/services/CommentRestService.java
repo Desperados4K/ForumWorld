@@ -45,7 +45,7 @@ public class CommentRestService implements RestService<Comment> {
 
     @Override
     public Resource<Comment> save(Comment entity) {
-        return null;
+        return commentResourceAssembler.toResource(commentRepository.save(entity));
     }
 
     @Override

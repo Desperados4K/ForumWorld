@@ -5,10 +5,9 @@ import com.despedaros4k.forum_world.services.CommentRestService;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(CommentController.BASE_URL)
@@ -30,5 +29,14 @@ public class CommentController {
     @GetMapping(path = "/{id}", produces = "application/hal+json")
     public ResponseEntity<Resource<Comment>> oneComment(@PathVariable Long id) {
         return ResponseEntity.ok(commentRestService.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<Resource<Comment>> newComment(@RequestBody Comment comment) {
+        Resource<Comment> commentResource = commentRestService.save(comment);
+        return ResponseEntity
+                .created(
+                        URI.create(commentResource.getId().expand().getHref()))
+                .body(commentResource);
     }
 }
