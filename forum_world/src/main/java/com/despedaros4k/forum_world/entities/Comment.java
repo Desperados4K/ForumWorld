@@ -1,6 +1,6 @@
 package com.despedaros4k.forum_world.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,8 +32,9 @@ public class Comment {
 
     )
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonIgnore
     private User author;
+
 
     @ManyToOne(
             fetch = FetchType.EAGER,
@@ -44,6 +45,7 @@ public class Comment {
             }
     )
     @JoinColumn(name = "entry_id")
-    @JsonBackReference
+    @JsonIgnore
     private Entry entry;
+
 }

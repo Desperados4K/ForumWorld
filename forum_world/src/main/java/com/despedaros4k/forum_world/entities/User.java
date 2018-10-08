@@ -2,7 +2,7 @@ package com.despedaros4k.forum_world.entities;
 
 import com.despedaros4k.forum_world.entities.enums.Gender;
 import com.despedaros4k.forum_world.entities.enums.Role;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,17 +15,6 @@ import java.util.Collection;
 @AllArgsConstructor
 @Builder
 public class User {
-
-    public User(String userName, String firstName, String lastName, Gender gender, String email, Role role, String password, boolean authorized) {
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.email = email;
-        this.role = role;
-        this.password = password;
-        this.authorized = authorized;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,12 +48,23 @@ public class User {
     private boolean authorized;
 
 
+    public User(String userName, String firstName, String lastName, Gender gender, String email, Role role, String password, boolean authorized) {
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+        this.role = role;
+        this.password = password;
+        this.authorized = authorized;
+    }
+
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "author",
             cascade = CascadeType.ALL
     )
-    @JsonBackReference
+    @JsonIgnore
     private Collection<Topic> topics;
 
     @OneToMany(
@@ -72,7 +72,7 @@ public class User {
             mappedBy = "author",
             cascade = CascadeType.ALL
     )
-    @JsonBackReference
+    @JsonIgnore
     private Collection<Entry> entries;
 
     @OneToMany(
@@ -80,6 +80,6 @@ public class User {
             mappedBy = "author",
             cascade = CascadeType.ALL
     )
-    @JsonBackReference
+    @JsonIgnore
     private Collection<Comment> comments;
 }

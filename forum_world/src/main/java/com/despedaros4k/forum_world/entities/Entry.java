@@ -1,7 +1,6 @@
 package com.despedaros4k.forum_world.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,7 +28,7 @@ public class Entry  {
             mappedBy = "entry",
             cascade = CascadeType.ALL
     )
-    @JsonBackReference
+    @JsonIgnore
     private Collection<Comment> comments;
 
     @ManyToOne(
@@ -42,7 +41,7 @@ public class Entry  {
 
     )
     @JoinColumn(name = "user_id")
-    @JsonManagedReference
+    @JsonIgnore
     private User author;
     @ManyToOne(
             fetch = FetchType.EAGER,
@@ -54,6 +53,6 @@ public class Entry  {
 
     )
     @JoinColumn(name = "topic_id")
-    @JsonManagedReference
+    @JsonIgnore
     private Topic topic;
 }

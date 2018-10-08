@@ -1,8 +1,7 @@
 package com.despedaros4k.forum_world.entities;
 
 import com.despedaros4k.forum_world.entities.enums.Category;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,13 +23,20 @@ public class Topic {
     private Category category;
     private LocalDateTime date;
 
+    public Topic(String title, Category category, LocalDateTime date, User author) {
+        this.title = title;
+        this.category = category;
+        this.date = date;
+        this.author = author;
+    }
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "topic",
             cascade = CascadeType.ALL
     )
-    @JsonBackReference
+    @JsonIgnore
     private Collection<Entry> entries;
+
     @ManyToOne(
             fetch = FetchType.EAGER,
             cascade = {
@@ -41,13 +47,6 @@ public class Topic {
 
     )
     @JoinColumn(name = "user_id")
-    @JsonManagedReference
+    @JsonIgnore
     private User author;
-
-    public Topic(String title, Category category, LocalDateTime date, User author) {
-        this.title = title;
-        this.category = category;
-        this.date = date;
-        this.author = author;
-    }
 }
