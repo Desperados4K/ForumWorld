@@ -4,6 +4,7 @@ import com.despedaros4k.forum_world.controllers.CommentController;
 import com.despedaros4k.forum_world.entities.Comment;
 import com.despedaros4k.forum_world.repositories.CommentRepository;
 import com.despedaros4k.forum_world.resourceAssemblers.CommentResourceAssembler;
+import com.despedaros4k.forum_world.util.exceptions.CommentNotFoundException;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,8 @@ public class CommentRestService implements RestService<Comment> {
 
     @Override
     public Resource<Comment> findById(Long id) {
-        return null;
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
+        return commentResourceAssembler.toResource(comment);
     }
 
     @Override
