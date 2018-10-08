@@ -33,7 +33,7 @@ public class Entry  {
     private Collection<Comment> comments;
 
     @ManyToOne(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
@@ -45,7 +45,7 @@ public class Entry  {
     @JsonManagedReference
     private User author;
     @ManyToOne(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
