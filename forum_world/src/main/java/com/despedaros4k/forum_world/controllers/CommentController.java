@@ -31,7 +31,7 @@ public class CommentController {
         return ResponseEntity.ok(commentRestService.findById(id));
     }
 
-    @PostMapping
+    @PostMapping(produces = "application/hal+json", consumes =  "application/hal+json")
     public ResponseEntity<Resource<Comment>> newComment(@RequestBody Comment comment) {
         Resource<Comment> commentResource = commentRestService.save(comment);
         return ResponseEntity
