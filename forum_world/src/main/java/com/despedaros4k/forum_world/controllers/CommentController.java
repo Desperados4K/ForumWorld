@@ -31,12 +31,20 @@ public class CommentController {
         return ResponseEntity.ok(commentRestService.findById(id));
     }
 
-    @PostMapping(produces = "application/hal+json", consumes =  "application/hal+json")
+    @PostMapping(produces = "application/hal+json", consumes = "application/hal+json")
     public ResponseEntity<Resource<Comment>> newComment(@RequestBody Comment comment) {
         Resource<Comment> commentResource = commentRestService.save(comment);
         return ResponseEntity
                 .created(
                         URI.create(commentResource.getId().expand().getHref()))
+                .body(commentResource);
+    }
+
+    @PutMapping(path = {"/{id}"}, produces = "application/hal+json", consumes = "application/hal+json")
+    public ResponseEntity<Resource<Comment>> updateComment(@RequestBody Comment comment, @PathVariable Long id) {
+        Resource<Comment> commentResource = commentRestService.update(comment, id);
+        return ResponseEntity
+                .created(URI.create(commentResource.getId().getHref()))
                 .body(commentResource);
     }
 }
