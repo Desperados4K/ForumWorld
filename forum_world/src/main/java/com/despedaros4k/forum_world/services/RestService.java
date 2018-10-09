@@ -9,4 +9,5 @@ public interface RestService<T> {
     Resource<T> findById(Long id);
     Resource<T> save(T entity);
     void deleteById(Long id);
+    Resource<T> update(T entity, Long id);
 }

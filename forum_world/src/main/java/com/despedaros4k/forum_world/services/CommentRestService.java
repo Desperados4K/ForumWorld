@@ -52,4 +52,21 @@ public class CommentRestService implements RestService<Comment> {
     public void deleteById(Long id) {
 
     }
+
+    @Override
+    public Resource<Comment> update(Comment entity, Long id) {
+        Comment updatedComment = commentRepository.findById(id)
+                .map(comment -> {
+                    comment.setContent(entity.getContent());
+                    comment.setDate(entity.getDate());
+                    return commentRepository.save(comment);
+                })
+                .orElseGet(() -> {
+                    //todo chyba to jest nie potrzebne bo z automatu to i tak nadaje inne id
+                    entity.setId(id);
+                    return commentRepository.save(entity);
+                        }
+                );
+        return  commentResourceAssembler.toResource(updatedComment);
+    }
 }

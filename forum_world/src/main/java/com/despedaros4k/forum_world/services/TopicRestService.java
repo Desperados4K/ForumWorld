@@ -52,4 +52,9 @@ public class TopicRestService implements RestService<Topic> {
     public void deleteById(Long id) {
 
     }
+
+    @Override
+    public Resource<Topic> update(Topic entity, Long id) {
+        return null;
+    }
 }

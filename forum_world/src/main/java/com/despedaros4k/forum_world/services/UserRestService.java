@@ -52,4 +52,9 @@ public class UserRestService implements RestService<User> {
     public void deleteById(Long id) {
 
     }
+
+    @Override
+    public Resource<User> update(User entity, Long id) {
+        return null;
+    }
 }
