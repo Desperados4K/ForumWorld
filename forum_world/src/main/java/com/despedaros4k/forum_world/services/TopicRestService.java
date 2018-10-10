@@ -7,6 +7,7 @@ import com.despedaros4k.forum_world.resourceAssemblers.TopicResourceAssembler;
 import com.despedaros4k.forum_world.util.exceptions.TopicNotFoundException;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,8 +50,8 @@ public class TopicRestService implements RestService<Topic> {
     }
 
     @Override
-    public void deleteById(Long id) {
-
+    public ResponseEntity deleteById(Long id) {
+        return null;
     }
 
     @Override

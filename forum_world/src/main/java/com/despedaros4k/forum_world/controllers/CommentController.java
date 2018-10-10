@@ -35,8 +35,7 @@ public class CommentController {
     public ResponseEntity<Resource<Comment>> newComment(@RequestBody Comment comment) {
         Resource<Comment> commentResource = commentRestService.save(comment);
         return ResponseEntity
-                .created(
-                        URI.create(commentResource.getId().expand().getHref()))
+                .created(URI.create(commentResource.getId().expand().getHref()))
                 .body(commentResource);
     }
 
@@ -46,5 +45,10 @@ public class CommentController {
         return ResponseEntity
                 .created(URI.create(commentResource.getId().getHref()))
                 .body(commentResource);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteComment(@PathVariable Long id) {
+        return commentRestService.deleteById(id);
     }
 }

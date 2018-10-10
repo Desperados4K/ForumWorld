@@ -7,9 +7,13 @@ import com.despedaros4k.forum_world.resourceAssemblers.CommentResourceAssembler;
 import com.despedaros4k.forum_world.util.exceptions.CommentNotFoundException;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.VndErrors;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -49,11 +53,6 @@ public class CommentRestService implements RestService<Comment> {
     }
 
     @Override
-    public void deleteById(Long id) {
-
-    }
-
-    @Override
     public Resource<Comment> update(Comment entity, Long id) {
         Comment updatedComment = commentRepository.findById(id)
                 .map(comment -> {
@@ -68,5 +67,19 @@ public class CommentRestService implements RestService<Comment> {
                         }
                 );
         return  commentResourceAssembler.toResource(updatedComment);
+    }
+
+    @Override
+    public ResponseEntity deleteById(Long id) {
+        Optional<Comment> commentToDelete = commentRepository.findById(id);
+        if (commentToDelete.isPresent()) {
+            Comment comment = commentToDelete.get();
+            commentRepository.deleteById(comment.getId());
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(new VndErrors.VndError(
+                "Method not allowed",
+                "There is no comment with the id: " + id));
     }
 }
