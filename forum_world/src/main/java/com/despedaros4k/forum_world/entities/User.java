@@ -1,7 +1,6 @@
 package com.despedaros4k.forum_world.entities;
 
 import com.despedaros4k.forum_world.entities.enums.Gender;
-import com.despedaros4k.forum_world.entities.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -37,8 +36,8 @@ public class User {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "role")
-    @Enumerated(value = EnumType.STRING)
+    @JoinColumn(name = "role")
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     private Role role;
 
     @Column(name = "password")
@@ -47,17 +46,6 @@ public class User {
     @Column(name = "authorized")
     private boolean authorized;
 
-
-    public User(String userName, String firstName, String lastName, Gender gender, String email, Role role, String password, boolean authorized) {
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.email = email;
-        this.role = role;
-        this.password = password;
-        this.authorized = authorized;
-    }
 
     @OneToMany(
             fetch = FetchType.LAZY,
@@ -82,4 +70,15 @@ public class User {
     )
     @JsonIgnore
     private Collection<Comment> comments;
+
+    public User(String userName, String firstName, String lastName, Gender gender, String email, Role role, String password, boolean authorized) {
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+        this.role = role;
+        this.password = password;
+        this.authorized = authorized;
+    }
 }

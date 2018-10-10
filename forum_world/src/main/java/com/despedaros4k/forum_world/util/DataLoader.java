@@ -1,16 +1,9 @@
 package com.despedaros4k.forum_world.util;
 
-import com.despedaros4k.forum_world.entities.Comment;
-import com.despedaros4k.forum_world.entities.Entry;
-import com.despedaros4k.forum_world.entities.Topic;
-import com.despedaros4k.forum_world.entities.User;
+import com.despedaros4k.forum_world.entities.*;
 import com.despedaros4k.forum_world.entities.enums.Category;
 import com.despedaros4k.forum_world.entities.enums.Gender;
-import com.despedaros4k.forum_world.entities.enums.Role;
-import com.despedaros4k.forum_world.repositories.CommentRepository;
-import com.despedaros4k.forum_world.repositories.EntryRepository;
-import com.despedaros4k.forum_world.repositories.TopicRepository;
-import com.despedaros4k.forum_world.repositories.UserRepository;
+import com.despedaros4k.forum_world.repositories.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -28,17 +21,20 @@ public class DataLoader {
     private TopicRepository topicRepository;
     private EntryRepository entryRepository;
     private CommentRepository commentRepository;
+    private RoleRepository roleRepository;
 
-    public DataLoader(UserRepository userRepository, TopicRepository topicRepository, EntryRepository entryRepository, CommentRepository commentRepository) {
+    public DataLoader(UserRepository userRepository, TopicRepository topicRepository, EntryRepository entryRepository, CommentRepository commentRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.topicRepository = topicRepository;
         this.entryRepository = entryRepository;
         this.commentRepository = commentRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Bean
     public CommandLineRunner initDatabase() {
         //prepare entities and save them into database
+        prepareUtils();
         Iterable<User> users = initUsers();
         Iterable<Topic> topics = initTopics();
         Iterable<Entry> entries = initEntries();
@@ -63,18 +59,25 @@ public class DataLoader {
         return args -> {};
     }
 
+    private void prepareUtils() {
+        // initialize data for role of user
+        roleRepository.save(Role.builder().roleName("ADMIN").build());
+        roleRepository.save(Role.builder().roleName("MODERATOR").build());
+        roleRepository.save(Role.builder().roleName("REGULAR").build());
+
+    }
     private Iterable<User> initUsers() {
         User adminUser = userRepository.save(
                 User.builder()
-                .userName("Romanello").firstName("Roman").lastName("Bułka").gender(Gender.MALE).email("roman@info.com").role(Role.ADMIN).password("password").authorized(true)
+                .userName("Romanello").firstName("Roman").lastName("Bułka").gender(Gender.MALE).email("roman@info.com").role(roleRepository.findByRoleName("ADMIN").get()).password("password").authorized(true)
                 .build());
         User moderatorUser = userRepository.save(
                 User.builder()
-                .userName("Mała").firstName("Irenka").lastName("Buc-Pinda").gender(Gender.FEMALE).email("irenka@info.com").role(Role.MODERATOR).password("password2").authorized(false)
+                .userName("Mała").firstName("Irenka").lastName("Buc-Pinda").gender(Gender.FEMALE).email("irenka@info.com").role(roleRepository.findByRoleName("MODERATOR").get()).password("password2").authorized(false)
                 .build());
         User regularUser = userRepository.save(
                 User.builder()
-                .userName("Viola").firstName("Wioletta").lastName("Szczepanik").gender(Gender.FEMALE).email("viola@info.com").role(Role.REGULAR).password("password3").authorized(true)
+                .userName("Viola").firstName("Wioletta").lastName("Szczepanik").gender(Gender.FEMALE).email("viola@info.com").role(roleRepository.findByRoleName("REGULAR").get()).password("password3").authorized(true)
                 .build());
 
         return Arrays.asList(adminUser, moderatorUser, regularUser);
