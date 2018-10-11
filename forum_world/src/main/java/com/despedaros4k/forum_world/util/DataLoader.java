@@ -2,7 +2,6 @@ package com.despedaros4k.forum_world.util;
 
 import com.despedaros4k.forum_world.entities.*;
 import com.despedaros4k.forum_world.entities.enums.Category;
-import com.despedaros4k.forum_world.entities.enums.Gender;
 import com.despedaros4k.forum_world.repositories.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -22,13 +21,15 @@ public class DataLoader {
     private EntryRepository entryRepository;
     private CommentRepository commentRepository;
     private RoleRepository roleRepository;
+    private GenderRepository genderRepository;
 
-    public DataLoader(UserRepository userRepository, TopicRepository topicRepository, EntryRepository entryRepository, CommentRepository commentRepository, RoleRepository roleRepository) {
+    public DataLoader(UserRepository userRepository, TopicRepository topicRepository, EntryRepository entryRepository, CommentRepository commentRepository, RoleRepository roleRepository, GenderRepository genderRepository) {
         this.userRepository = userRepository;
         this.topicRepository = topicRepository;
         this.entryRepository = entryRepository;
         this.commentRepository = commentRepository;
         this.roleRepository = roleRepository;
+        this.genderRepository = genderRepository;
     }
 
     @Bean
@@ -65,24 +66,29 @@ public class DataLoader {
         roleRepository.save(Role.builder().roleName("MODERATOR").build());
         roleRepository.save(Role.builder().roleName("REGULAR").build());
 
+        //initialize data for gender of user
+        genderRepository.save(Gender.builder().genderName("FEMALE").build());
+        genderRepository.save(Gender.builder().genderName("MALE").build());
+
     }
     private Iterable<User> initUsers() {
         User adminUser = userRepository.save(
+                // creating new user by user builder
                 User.builder()
-                .userName("Romanello").firstName("Roman").lastName("Bułka").gender(Gender.MALE).email("roman@info.com").role(roleRepository.findByRoleName("ADMIN").get()).password("password").authorized(true)
+                .userName("Romanello").firstName("Roman").lastName("Bułka").gender(genderRepository.findByGenderName("MALE").get()).email("roman@info.com").role(roleRepository.findByRoleName("ADMIN").get()).password("password").authorized(true)
                 .build());
         User moderatorUser = userRepository.save(
                 User.builder()
-                .userName("Mała").firstName("Irenka").lastName("Buc-Pinda").gender(Gender.FEMALE).email("irenka@info.com").role(roleRepository.findByRoleName("MODERATOR").get()).password("password2").authorized(false)
+                .userName("Mała").firstName("Irenka").lastName("Buc-Pinda").gender(genderRepository.findByGenderName("FEMALE").get()).email("irenka@info.com").role(roleRepository.findByRoleName("MODERATOR").get()).password("password2").authorized(false)
                 .build());
         User regularUser = userRepository.save(
                 User.builder()
-                .userName("Viola").firstName("Wioletta").lastName("Szczepanik").gender(Gender.FEMALE).email("viola@info.com").role(roleRepository.findByRoleName("REGULAR").get()).password("password3").authorized(true)
+                .userName("Viola").firstName("Wioletta").lastName("Szczepanik").gender(genderRepository.findByGenderName("FEMALE").get()).email("viola@info.com").role(roleRepository.findByRoleName("REGULAR").get()).password("password3").authorized(true)
                 .build());
 
         return Arrays.asList(adminUser, moderatorUser, regularUser);
     }
-
+    //todo dokonczyc zamiane enumow i rozszerzanie baseentity
     private Iterable<Topic> initTopics() {
         User romanUser = userRepository.findByUserName("Romanello").get();
         User violaUser = userRepository.findByUserName("Viola").get();

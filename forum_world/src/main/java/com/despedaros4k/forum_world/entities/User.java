@@ -1,6 +1,5 @@
 package com.despedaros4k.forum_world.entities;
 
-import com.despedaros4k.forum_world.entities.enums.Gender;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -13,12 +12,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long id;
+public class User extends BaseEntity {
 
     @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
@@ -29,15 +23,15 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "gender")
-    @Enumerated(value = EnumType.STRING)
+    @JoinColumn(name = "gender")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     private Gender gender;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @JoinColumn(name = "role")
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     private Role role;
 
     @Column(name = "password")
