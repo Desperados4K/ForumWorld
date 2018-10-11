@@ -12,46 +12,28 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Entry  {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Entry extends BaseEntity {
+
+    @Column(name = "title")
     private String title;
 
     @Lob
+    @Column(name = "content")
     private String content;
 
+    @Column(name = "date")
     private LocalDateTime date;
 
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "entry",
-            cascade = CascadeType.ALL
-    )
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "entry", cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<Comment> comments;
 
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            }
-
-    )
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User author;
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            }
 
-    )
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "topic_id")
     @JsonIgnore
     private Topic topic;

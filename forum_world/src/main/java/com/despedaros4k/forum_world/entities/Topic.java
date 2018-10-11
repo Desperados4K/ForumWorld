@@ -1,6 +1,5 @@
 package com.despedaros4k.forum_world.entities;
 
-import com.despedaros4k.forum_world.entities.enums.Category;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -14,14 +13,26 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Topic {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Topic extends BaseEntity{
+
+    @Column(name = "title")
     private String title;
-    @Enumerated(value = EnumType.STRING)
+
+    @JoinColumn(name = "category")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     private Category category;
+
+    @Column(name = "date")
     private LocalDateTime date;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "topic", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Collection<Entry> entries;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User author;
 
     public Topic(String title, Category category, LocalDateTime date, User author) {
         this.title = title;
@@ -29,24 +40,4 @@ public class Topic {
         this.date = date;
         this.author = author;
     }
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "topic",
-            cascade = CascadeType.ALL
-    )
-    @JsonIgnore
-    private Collection<Entry> entries;
-
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            }
-
-    )
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User author;
 }

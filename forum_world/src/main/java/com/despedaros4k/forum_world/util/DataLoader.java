@@ -1,7 +1,6 @@
 package com.despedaros4k.forum_world.util;
 
 import com.despedaros4k.forum_world.entities.*;
-import com.despedaros4k.forum_world.entities.enums.Category;
 import com.despedaros4k.forum_world.repositories.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -22,14 +21,16 @@ public class DataLoader {
     private CommentRepository commentRepository;
     private RoleRepository roleRepository;
     private GenderRepository genderRepository;
+    private CategoryRepository categoryRepository;
 
-    public DataLoader(UserRepository userRepository, TopicRepository topicRepository, EntryRepository entryRepository, CommentRepository commentRepository, RoleRepository roleRepository, GenderRepository genderRepository) {
+    public DataLoader(UserRepository userRepository, TopicRepository topicRepository, EntryRepository entryRepository, CommentRepository commentRepository, RoleRepository roleRepository, GenderRepository genderRepository, CategoryRepository categoryRepository) {
         this.userRepository = userRepository;
         this.topicRepository = topicRepository;
         this.entryRepository = entryRepository;
         this.commentRepository = commentRepository;
         this.roleRepository = roleRepository;
         this.genderRepository = genderRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Bean
@@ -70,6 +71,11 @@ public class DataLoader {
         genderRepository.save(Gender.builder().genderName("FEMALE").build());
         genderRepository.save(Gender.builder().genderName("MALE").build());
 
+        //initialize data for topic categories
+        categoryRepository.save(Category.builder().categoryName("Java").build());
+        categoryRepository.save(Category.builder().categoryName("Python").build());
+        categoryRepository.save(Category.builder().categoryName("C++").build());
+
     }
     private Iterable<User> initUsers() {
         User adminUser = userRepository.save(
@@ -95,12 +101,12 @@ public class DataLoader {
 
         Topic firstTopic = topicRepository.save(
                 Topic.builder()
-                        .title("My pet is ill").category(Category.ANIMALS).date(LocalDateTime.now()).author(romanUser)
+                        .title("My code not works").category(categoryRepository.findByCategoryName("Java").get()).date(LocalDateTime.now()).author(romanUser)
                         .build());
 
         Topic secondTopic = topicRepository.save(
                 Topic.builder()
-                        .title("I love my pet even it's ill").category(Category.ANIMALS).date(LocalDateTime.now()).author(violaUser)
+                        .title("I can't split the string").category(categoryRepository.findByCategoryName("Python").get()).date(LocalDateTime.now()).author(violaUser)
                         .build());
         return Arrays.asList(firstTopic, secondTopic);
     }
@@ -114,7 +120,7 @@ public class DataLoader {
         Topic secondTopic = topicRepository.findById(2L).get();
 
         Entry firstEntry = entryRepository.save(
-                Entry.builder().title("Help me cure my pet").author(romanUser).date(LocalDateTime.now()).topic(firstTopic)
+                Entry.builder().title("Help in code").author(romanUser).date(LocalDateTime.now()).topic(firstTopic)
                         .content("Lorem ipsum dolor sit amet, consectetur adipisicing elit, " +
                                 "sed do eiusmod tempor incididunt ut labore et dolore magna " +
                                 "aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
@@ -125,7 +131,7 @@ public class DataLoader {
                                 "serunt mollit anim id est laborum.")
                         .build());
         Entry secondEntry = entryRepository.save(
-                Entry.builder().title("Do You recognize race of my dog").author(violaUser).date(LocalDateTime.now()).topic(secondTopic)
+                Entry.builder().title("Did you try slice?").author(violaUser).date(LocalDateTime.now()).topic(secondTopic)
                         .content("Lorem ipsum dolor sit amet, consectetur adipisicing elit, " +
                                 "sed do eiusmod tempor incididunt ut labore et dolore magna " +
                                 "aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
@@ -136,7 +142,7 @@ public class DataLoader {
                                 "serunt mollit anim id est laborum.")
                         .build());
         Entry thirdEntry = entryRepository.save(
-                Entry.builder().title("Nobody helps your pet").author(malaUser).date(LocalDateTime.now()).topic(firstTopic)
+                Entry.builder().title("Java dies").author(malaUser).date(LocalDateTime.now()).topic(firstTopic)
                         .content("Lorem ipsum dolor sit amet, consectetur adipisicing elit, " +
                                 "sed do eiusmod tempor incididunt ut labore et dolore magna " +
                                 "aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
